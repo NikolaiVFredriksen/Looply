@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type Loop = {
   id: string;
@@ -10,15 +10,31 @@ type Loop = {
 };
 
 export default function Home() {
-  const [loops, setLoops] = useState<Loop[]>([]);
+  const [loops, setLoops] = useState<Loop[]>([
+    {
+      id: "1",
+      title: "Reach out to Martin",
+      description:
+        "We talked about meeting up but neither of us followed through.",
+      why: "Not sure if he wants to hear from me.",
+    },
+    {
+      id: "2",
+      title: "Learn to make pasta from scratch",
+      description:
+        "Been wanting to do this for a long time but never got around to it.",
+      why: "",
+    },
+    {
+      id: "3",
+      title: "Fix the squeaky door",
+      description: "It's been bothering me for months.",
+      why: "",
+    },
+  ]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", why: "" });
-
-  useEffect(() => {
-    const saved = localStorage.getItem("loops");
-    if (saved) setLoops(JSON.parse(saved));
-  }, []);
 
   const save = (updated: Loop[]) => {
     setLoops(updated);
@@ -43,61 +59,116 @@ export default function Home() {
     setActiveId(null);
   };
 
-  const handleKeep = (id: string) => {
-    setActiveId(null);
-  };
-
   const handleRelease = (id: string) => {
     save(loops.filter((l) => l.id !== id));
     setActiveId(null);
   };
 
   return (
-    <main className="min-h-screen px-6 py-12 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold tracking-tight mb-8">Looply</h1>
+    <main className="min-h-screen px-6 py-12 max-w-lg mx-auto relative overflow-hidden">
+      {/* Background ring */}
+      <div
+        className="pointer-events-none absolute -top-20 -right-20 rounded-full"
+        style={{
+          width: 340,
+          height: 340,
+          border: "48px solid rgba(180, 160, 130, 0.08)",
+        }}
+      />
 
-      {loops.length === 0 && (
-        <p className="text-sm text-[#AAAAAA] text-center mt-20">
-          No open loops. Nice.
-        </p>
-      )}
+      {/* Header */}
+      <h1
+        className="text-3xl mb-1"
+        style={{
+          fontFamily: "var(--font-dm-serif)",
+          color: "#2C2416",
+          fontWeight: 400,
+        }}
+      >
+        Looply
+      </h1>
+      <p className="text-sm mb-8" style={{ color: "#A89880", fontWeight: 300 }}>
+        {loops.length} open {loops.length === 1 ? "loop" : "loops"}
+      </p>
 
-      <div className="flex flex-col gap-4">
+      {/* Loop list */}
+      <div className="flex flex-col gap-3">
         {loops.map((loop) => {
           const isActive = activeId === loop.id;
           return (
             <div
               key={loop.id}
               onClick={() => setActiveId(isActive ? null : loop.id)}
-              className={`bg-white/60 rounded-2xl p-5 shadow-sm cursor-pointer transition-all duration-300 ${
-                isActive ? "shadow-md" : ""
-              }`}
+              className="rounded-2xl p-5 cursor-pointer transition-all duration-200"
+              style={{
+                background: isActive
+                  ? "rgba(255,255,255,0.9)"
+                  : "rgba(255,255,255,0.55)",
+                border: isActive
+                  ? "0.5px solid rgba(180,160,130,0.35)"
+                  : "0.5px solid rgba(180,160,130,0.15)",
+              }}
             >
-              <h2 className="font-medium text-lg">{loop.title}</h2>
-              <p className="text-sm text-[#7A7A7A] mt-1">{loop.description}</p>
-              {loop.why && (
-                <p className="text-xs text-[#AAAAAA] mt-2 italic">{loop.why}</p>
-              )}
+              <div className="flex items-start gap-3">
+                {/* Open loop dot indicator */}
+                <div
+                  className="mt-1 shrink-0 rounded-full"
+                  style={{
+                    width: 8,
+                    height: 8,
+                    border: "1.5px solid #C4B4A0",
+                    background: "transparent",
+                  }}
+                />
+                <div className="flex-1">
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "#2C2416" }}
+                  >
+                    {loop.title}
+                  </p>
+                  <p
+                    className="text-sm mt-1"
+                    style={{ color: "#A89880", fontWeight: 300 }}
+                  >
+                    {loop.description}
+                  </p>
+                  {loop.why && (
+                    <p
+                      className="text-xs mt-1 italic"
+                      style={{ color: "#C4B4A0" }}
+                    >
+                      {loop.why}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Actions */}
               {isActive && (
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="mt-5 flex items-center justify-between gap-3"
+                  className="flex items-center gap-3 mt-4 pt-4"
+                  style={{ borderTop: "0.5px solid rgba(180,160,130,0.15)" }}
                 >
                   <button
-                    onClick={() => handleKeep(loop.id)}
-                    className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors"
+                    onClick={() => setActiveId(null)}
+                    className="text-sm transition-colors"
+                    style={{ color: "#C4B4A0", fontWeight: 300 }}
                   >
                     Keep
                   </button>
                   <button
                     onClick={() => handleClose(loop.id)}
-                    className="flex-1 bg-[#2C2C2C] text-white text-sm font-medium py-2.5 rounded-xl hover:bg-[#1a1a1a] transition-colors"
+                    className="flex-1 rounded-xl py-2.5 text-sm font-medium transition-all"
+                    style={{ background: "#2C2416", color: "#F7F4F0" }}
                   >
                     Close loop
                   </button>
                   <button
                     onClick={() => handleRelease(loop.id)}
-                    className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors"
+                    className="text-sm transition-colors"
+                    style={{ color: "#C4B4A0", fontWeight: 300 }}
                   >
                     Release
                   </button>
@@ -108,26 +179,49 @@ export default function Home() {
         })}
       </div>
 
+      {/* Add button */}
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowModal(true);
+        onClick={() => setShowModal(true)}
+        className="mt-6 w-full py-3.5 rounded-2xl text-sm transition-all"
+        style={{
+          border: "0.5px solid rgba(180,160,130,0.3)",
+          color: "#A89880",
+          fontWeight: 300,
+          background: "transparent",
         }}
-        className="mt-8 w-full py-3 rounded-2xl border border-[#2C2C2C]/20 text-sm text-[#7A7A7A] hover:text-[#2C2C2C] hover:border-[#2C2C2C]/40 transition-all"
       >
         + Add a loop
       </button>
 
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/20 flex items-end justify-center z-50">
-          <div className="bg-[#FAF8F5] w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4">
-            <h2 className="text-lg font-semibold">New loop</h2>
+        <div
+          className="fixed inset-0 flex items-end justify-center z-50"
+          style={{ background: "rgba(44,36,22,0.15)" }}
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4"
+            style={{ background: "#F7F4F0" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2
+              className="text-lg"
+              style={{
+                fontFamily: "var(--font-dm-serif)",
+                fontWeight: 400,
+                color: "#2C2416",
+              }}
+            >
+              New loop
+            </h2>
             <input
               type="text"
               placeholder="Title"
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="w-full bg-white/60 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-[#AAAAAA]"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none"
+              style={{ background: "rgba(255,255,255,0.7)", color: "#2C2416" }}
             />
             <textarea
               placeholder="What's the loop about?"
@@ -135,24 +229,28 @@ export default function Home() {
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
-              className="w-full bg-white/60 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-[#AAAAAA] resize-none h-24"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none h-24"
+              style={{ background: "rgba(255,255,255,0.7)", color: "#2C2416" }}
             />
             <textarea
               placeholder="Why is it hard to close? (optional)"
               value={form.why}
               onChange={(e) => setForm({ ...form, why: e.target.value })}
-              className="w-full bg-white/60 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-[#AAAAAA] resize-none h-20"
+              className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none h-20"
+              style={{ background: "rgba(255,255,255,0.7)", color: "#2C2416" }}
             />
             <div className="flex gap-3 mt-2">
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 py-3 rounded-xl text-sm text-[#AAAAAA] hover:text-[#2C2C2C] transition-colors"
+                className="flex-1 py-3 rounded-xl text-sm"
+                style={{ color: "#A89880", fontWeight: 300 }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleAdd}
-                className="flex-1 bg-[#2C2C2C] text-white text-sm font-medium py-3 rounded-xl hover:bg-[#1a1a1a] transition-colors"
+                className="flex-1 py-3 rounded-xl text-sm font-medium"
+                style={{ background: "#2C2416", color: "#F7F4F0" }}
               >
                 Add loop
               </button>
