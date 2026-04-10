@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Loop = {
   id: string;
@@ -9,28 +9,21 @@ type Loop = {
   why: string;
 };
 
-const mockLoops: Loop[] = [
-  {
-    id: "1",
-    title: "Reach out to Martin",
-    description:
-      "We talked about meeting up but neither of us followed through.",
-    why: "Not sure if he wants to hear from me.",
-  },
-  {
-    id: "2",
-    title: "Learn to make pasta from scratch",
-    description:
-      "Been wanting to do this for a long time but never got around to it.",
-    why: "",
-  },
-];
-
 export default function Home() {
-  const [loops, setLoops] = useState<Loop[]>(mockLoops);
+  const [loops, setLoops] = useState<Loop[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", why: "" });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("loops");
+    if (saved) setLoops(JSON.parse(saved));
+  }, []);
+
+  const save = (updated: Loop[]) => {
+    setLoops(updated);
+    localStorage.setItem("loops", JSON.stringify(updated));
+  };
 
   const handleAdd = () => {
     if (!form.title.trim()) return;
@@ -40,14 +33,34 @@ export default function Home() {
       description: form.description,
       why: form.why,
     };
-    setLoops([...loops, newLoop]);
+    save([...loops, newLoop]);
     setForm({ title: "", description: "", why: "" });
     setShowModal(false);
+  };
+
+  const handleClose = (id: string) => {
+    save(loops.filter((l) => l.id !== id));
+    setActiveId(null);
+  };
+
+  const handleKeep = (id: string) => {
+    setActiveId(null);
+  };
+
+  const handleRelease = (id: string) => {
+    save(loops.filter((l) => l.id !== id));
+    setActiveId(null);
   };
 
   return (
     <main className="min-h-screen px-6 py-12 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold tracking-tight mb-8">Looply</h1>
+
+      {loops.length === 0 && (
+        <p className="text-sm text-[#AAAAAA] text-center mt-20">
+          No open loops. Nice.
+        </p>
+      )}
 
       <div className="flex flex-col gap-4">
         {loops.map((loop) => {
@@ -66,14 +79,26 @@ export default function Home() {
                 <p className="text-xs text-[#AAAAAA] mt-2 italic">{loop.why}</p>
               )}
               {isActive && (
-                <div className="mt-5 flex items-center justify-between gap-3">
-                  <button className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors">
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-5 flex items-center justify-between gap-3"
+                >
+                  <button
+                    onClick={() => handleKeep(loop.id)}
+                    className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors"
+                  >
                     Keep
                   </button>
-                  <button className="flex-1 bg-[#2C2C2C] text-white text-sm font-medium py-2.5 rounded-xl hover:bg-[#1a1a1a] transition-colors">
+                  <button
+                    onClick={() => handleClose(loop.id)}
+                    className="flex-1 bg-[#2C2C2C] text-white text-sm font-medium py-2.5 rounded-xl hover:bg-[#1a1a1a] transition-colors"
+                  >
                     Close loop
                   </button>
-                  <button className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors">
+                  <button
+                    onClick={() => handleRelease(loop.id)}
+                    className="text-sm text-[#AAAAAA] hover:text-[#7A7A7A] transition-colors"
+                  >
                     Release
                   </button>
                 </div>
@@ -84,18 +109,19 @@ export default function Home() {
       </div>
 
       <button
-        onClick={() => setShowModal(true)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowModal(true);
+        }}
         className="mt-8 w-full py-3 rounded-2xl border border-[#2C2C2C]/20 text-sm text-[#7A7A7A] hover:text-[#2C2C2C] hover:border-[#2C2C2C]/40 transition-all"
       >
         + Add a loop
       </button>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/20 flex items-end justify-center z-50">
           <div className="bg-[#FAF8F5] w-full max-w-lg rounded-t-3xl p-6 flex flex-col gap-4">
             <h2 className="text-lg font-semibold">New loop</h2>
-
             <input
               type="text"
               placeholder="Title"
@@ -117,7 +143,6 @@ export default function Home() {
               onChange={(e) => setForm({ ...form, why: e.target.value })}
               className="w-full bg-white/60 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-[#AAAAAA] resize-none h-20"
             />
-
             <div className="flex gap-3 mt-2">
               <button
                 onClick={() => setShowModal(false)}
