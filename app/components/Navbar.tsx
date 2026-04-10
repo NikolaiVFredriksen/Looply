@@ -24,10 +24,10 @@ export default function Navbar() {
         justifyContent: "space-around",
         alignItems: "center",
         padding: "12px 0 28px",
-        background: "rgba(247,244,240,0.85)",
+        background: "rgba(247,244,240,0.95)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderTop: "0.5px solid rgba(180,155,120,0.15)",
+        borderTop: "0.5px solid rgba(180,155,120,0.3)",
         zIndex: 40,
       }}
     >
@@ -59,7 +59,7 @@ export default function Navbar() {
             <span
               style={{
                 fontSize: 11,
-                fontWeight: active ? 500 : 300,
+                fontWeight: active ? 500 : 400,
                 color: active ? "#1E1810" : "#C4B4A0",
                 fontFamily: "var(--font-dm-sans)",
                 transition: "color 0.2s",
