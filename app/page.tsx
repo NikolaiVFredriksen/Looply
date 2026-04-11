@@ -22,22 +22,16 @@ export default function Home() {
       setLoops([
         {
           id: "1",
-          title: "Reach out to Martin",
+          title: "reach out to martin",
           description:
-            "We talked about meeting up but neither of us followed through.",
-          why: "Not sure if he wants to hear from me.",
+            "we talked about meeting up but neither of us followed through.",
+          why: "not sure if he wants to hear from me.",
         },
         {
           id: "2",
-          title: "Learn to make pasta from scratch",
+          title: "learn to make pasta from scratch",
           description:
-            "Been wanting to do this for a long time but never got around to it.",
-          why: "",
-        },
-        {
-          id: "3",
-          title: "Fix the squeaky door",
-          description: "It's been bothering me for months.",
+            "been wanting to do this for a long time but never got around to it.",
           why: "",
         },
       ]);
@@ -57,92 +51,73 @@ export default function Home() {
 
   return (
     <main
-      className="min-h-screen max-w-md mx-auto px-5"
-      style={{ paddingTop: 64, paddingBottom: 48 }}
+      style={{
+        minHeight: "100vh",
+        maxWidth: 480,
+        margin: "0 auto",
+        padding: "72px 24px 140px",
+      }}
     >
-      {/* Subtle background circle */}
-      <div
-        className="fixed pointer-events-none"
-        style={{
-          top: -120,
-          right: -120,
-          width: 420,
-          height: 420,
-          borderRadius: "50%",
-          border: "56px solid rgba(180,155,120,0.07)",
-        }}
-      />
-      <div
-        className="fixed pointer-events-none"
-        style={{
-          bottom: -80,
-          left: -80,
-          width: 260,
-          height: 260,
-          borderRadius: "50%",
-          border: "36px solid rgba(180,155,120,0.05)",
-        }}
-      />
-
       {/* Header */}
       <div style={{ marginBottom: 48 }}>
-        <p
-          className="text-xs uppercase tracking-widest mb-3"
-          style={{ color: "#B8A898", fontWeight: 400, letterSpacing: "0.15em" }}
-        >
-          {new Date().toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
         <h1
           style={{
-            fontFamily: "var(--font-dm-serif)",
-            fontSize: 38,
+            fontFamily: "var(--font-dm-sans)",
+            fontSize: 28,
             color: "#1E1810",
-            fontWeight: 800,
-            lineHeight: 1.1,
-            margin: 0,
-            letterSpacing: "-0.04em",
+            fontWeight: 300,
+            margin: "0 0 6px",
+            letterSpacing: "-0.02em",
           }}
         >
-          Looply
+          your loops
         </h1>
         <p
-          style={{
-            color: "#B8A898",
-            fontSize: 14,
-            marginTop: 8,
-            fontWeight: 300,
-          }}
+          style={{ color: "#C4B4A0", fontSize: 13, margin: 0, fontWeight: 300 }}
         >
-          {loops.length === 0
-            ? "No open loops. Rare."
-            : `${loops.length} open ${loops.length === 1 ? "loop" : "loops"}`}
+          {loops.length === 0 ? "nice." : `${loops.length} open · 0 closed`}
         </p>
       </div>
 
       {/* Empty state */}
       {loops.length === 0 && (
-        <div style={{ textAlign: "center", padding: "48px 0" }}>
-          <div
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "80px 0",
+            gap: 16,
+          }}
+        >
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <path
+              d="M32 8 A24 24 0 1 0 56 32"
+              stroke="#D4C4B0"
+              strokeWidth="2"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
+          <p
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: "50%",
-              border: "2px solid rgba(180,155,120,0.25)",
-              margin: "0 auto 16px",
+              color: "#C4B4A0",
+              fontSize: 14,
+              fontWeight: 300,
+              textAlign: "center",
             }}
-          />
-          <p style={{ color: "#C4B4A0", fontSize: 14, fontWeight: 300 }}>
-            Your mind is clear.
+          >
+            no open loops
+          </p>
+          <p style={{ color: "#D4C4B0", fontSize: 13, fontWeight: 300 }}>
+            nice.
           </p>
         </div>
       )}
 
       {/* Loop list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {loops.map((loop) => {
           const isActive = activeId === loop.id;
           return (
@@ -150,44 +125,42 @@ export default function Home() {
               key={loop.id}
               onClick={() => setActiveId(isActive ? null : loop.id)}
               style={{
-                background: "rgba(255,255,255,0.72)",
+                background: "rgba(255,255,255,0.75)",
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
-                borderRadius: 20,
-                padding: isActive ? "22px 22px 18px" : "18px 22px",
+                borderRadius: 24,
+                padding: "20px 22px",
                 cursor: "pointer",
                 transition: "all 0.25s ease",
                 boxShadow: isActive
-                  ? "0 8px 32px rgba(44,36,22,0.10), 0 1px 2px rgba(44,36,22,0.06)"
-                  : "0 2px 8px rgba(44,36,22,0.06), 0 1px 2px rgba(44,36,22,0.04)",
-                border: isActive
-                  ? "0.5px solid rgba(180,155,120,0.3)"
-                  : "0.5px solid rgba(180,155,120,0.15)",
+                  ? "0 12px 40px rgba(30,24,16,0.12), 0 2px 8px rgba(30,24,16,0.06)"
+                  : "0 2px 12px rgba(30,24,16,0.07), 0 1px 3px rgba(30,24,16,0.04)",
+                border: "0.5px solid rgba(180,155,120,0.2)",
+                transform: isActive ? "translateY(-1px)" : "none",
               }}
             >
               <div
-                style={{ display: "flex", alignItems: "flex-start", gap: 14 }}
+                style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
               >
-                {/* Loop indicator */}
-                <div
-                  style={{
-                    marginTop: 4,
-                    flexShrink: 0,
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    border: "1.5px solid #C4B4A0",
-                    background: "transparent",
-                    transition: "border-color 0.2s",
-                  }}
-                />
+                {/* Large open circle */}
+                <div style={{ flexShrink: 0, marginTop: 2 }}>
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <path
+                      d="M18 4 A14 14 0 1 0 32 18"
+                      stroke="#C4B4A0"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
                 <div style={{ flex: 1 }}>
                   <p
                     style={{
                       fontSize: 15,
-                      fontWeight: 500,
+                      fontWeight: 400,
                       color: "#1E1810",
-                      margin: "0 0 4px",
+                      margin: "0 0 5px",
                       lineHeight: 1.4,
                     }}
                   >
@@ -210,7 +183,7 @@ export default function Home() {
                         fontSize: 12,
                         color: "#C4B4A0",
                         fontStyle: "italic",
-                        margin: "6px 0 0",
+                        margin: "5px 0 0",
                         fontWeight: 300,
                       }}
                     >
@@ -220,7 +193,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Actions */}
               {isActive && (
                 <div
                   onClick={(e) => e.stopPropagation()}
@@ -242,11 +214,11 @@ export default function Home() {
                       color: "#C4B4A0",
                       fontWeight: 300,
                       cursor: "pointer",
-                      padding: "8px 4px",
                       fontFamily: "var(--font-dm-sans)",
+                      padding: "8px 4px",
                     }}
                   >
-                    Keep
+                    keep
                   </button>
                   <button
                     onClick={() => {
@@ -258,16 +230,16 @@ export default function Home() {
                       background: "#1E1810",
                       color: "#F7F4F0",
                       border: "none",
-                      borderRadius: 12,
-                      padding: "11px 0",
+                      borderRadius: 14,
+                      padding: "12px 0",
                       fontSize: 13,
-                      fontWeight: 500,
+                      fontWeight: 400,
                       cursor: "pointer",
                       fontFamily: "var(--font-dm-sans)",
                       letterSpacing: "0.01em",
                     }}
                   >
-                    Close loop
+                    close loop
                   </button>
                   <button
                     onClick={() => {
@@ -281,11 +253,11 @@ export default function Home() {
                       color: "#C4B4A0",
                       fontWeight: 300,
                       cursor: "pointer",
-                      padding: "8px 4px",
                       fontFamily: "var(--font-dm-sans)",
+                      padding: "8px 4px",
                     }}
                   >
-                    Release
+                    release
                   </button>
                 </div>
               )}
@@ -298,21 +270,20 @@ export default function Home() {
       <button
         onClick={() => setShowModal(true)}
         style={{
-          marginTop: 16,
+          marginTop: 12,
           width: "100%",
           padding: "16px 0",
-          borderRadius: 20,
-          border: "0.5px dashed rgba(180,155,120,0.35)",
+          borderRadius: 24,
+          border: "0.5px dashed rgba(180,155,120,0.3)",
           background: "transparent",
           fontSize: 13,
-          color: "#B8A898",
+          color: "#C4B4A0",
           fontWeight: 300,
           cursor: "pointer",
           fontFamily: "var(--font-dm-sans)",
-          letterSpacing: "0.01em",
         }}
       >
-        + Add a loop
+        + add a loop
       </button>
 
       {/* Modal */}
@@ -322,8 +293,8 @@ export default function Home() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(30,24,16,0.18)",
-            backdropFilter: "blur(4px)",
+            background: "rgba(30,24,16,0.2)",
+            backdropFilter: "blur(8px)",
             display: "flex",
             alignItems: "flex-end",
             justifyContent: "center",
@@ -335,101 +306,107 @@ export default function Home() {
             style={{
               background: "#F7F4F0",
               width: "100%",
-              maxWidth: 448,
+              maxWidth: 480,
               borderRadius: "28px 28px 0 0",
-              padding: "28px 24px 40px",
+              padding: "28px 24px 52px",
               display: "flex",
               flexDirection: "column",
               gap: 12,
-              boxShadow: "0 -8px 40px rgba(44,36,22,0.12)",
+              boxShadow: "0 -8px 48px rgba(30,24,16,0.12)",
             }}
           >
-            {/* Handle */}
             <div
               style={{
-                width: 36,
-                height: 4,
+                width: 32,
+                height: 3,
                 borderRadius: 2,
                 background: "rgba(180,155,120,0.3)",
-                margin: "-12px auto 12px",
+                margin: "-12px auto 16px",
               }}
             />
-
             <h2
               style={{
-                fontFamily: "var(--font-dm-serif)",
-                fontSize: 22,
-                fontWeight: 400,
+                fontFamily: "var(--font-dm-sans)",
+                fontSize: 18,
+                fontWeight: 300,
                 color: "#1E1810",
                 margin: "0 0 4px",
+                letterSpacing: "-0.01em",
               }}
             >
-              New loop
+              new loop
             </h2>
-
-            {[
-              {
-                key: "title",
-                placeholder: "What's the loop?",
-                multiline: false,
-              },
-              {
-                key: "description",
-                placeholder: "Tell me more about it...",
-                multiline: true,
-              },
-              {
-                key: "why",
-                placeholder: "Why is it hard to close? (optional)",
-                multiline: true,
-              },
-            ].map(({ key, placeholder, multiline }) =>
-              multiline ? (
-                <textarea
-                  key={key}
-                  placeholder={placeholder}
-                  value={form[key as keyof typeof form]}
-                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                  style={{
-                    width: "100%",
-                    background: "rgba(255,255,255,0.8)",
-                    border: "0.5px solid rgba(180,155,120,0.2)",
-                    borderRadius: 14,
-                    padding: "13px 16px",
-                    fontSize: 14,
-                    fontWeight: 300,
-                    color: "#1E1810",
-                    resize: "none",
-                    height: 88,
-                    outline: "none",
-                    fontFamily: "var(--font-dm-sans)",
-                    boxSizing: "border-box",
-                  }}
-                />
-              ) : (
-                <input
-                  key={key}
-                  type="text"
-                  placeholder={placeholder}
-                  value={form[key as keyof typeof form]}
-                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                  style={{
-                    width: "100%",
-                    background: "rgba(255,255,255,0.8)",
-                    border: "0.5px solid rgba(180,155,120,0.2)",
-                    borderRadius: 14,
-                    padding: "13px 16px",
-                    fontSize: 14,
-                    fontWeight: 300,
-                    color: "#1E1810",
-                    outline: "none",
-                    fontFamily: "var(--font-dm-sans)",
-                    boxSizing: "border-box",
-                  }}
-                />
-              ),
-            )}
-
+            <p
+              style={{
+                fontSize: 13,
+                color: "#C4B4A0",
+                fontWeight: 300,
+                margin: "0 0 8px",
+              }}
+            >
+              what's been weighing on you?
+            </p>
+            <input
+              type="text"
+              placeholder="the thing on your mind..."
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              style={{
+                width: "100%",
+                background: "rgba(255,255,255,0.8)",
+                border: "0.5px solid rgba(180,155,120,0.2)",
+                borderRadius: 14,
+                padding: "13px 16px",
+                fontSize: 14,
+                fontWeight: 300,
+                color: "#1E1810",
+                outline: "none",
+                fontFamily: "var(--font-dm-sans)",
+                boxSizing: "border-box",
+              }}
+            />
+            <textarea
+              placeholder="tell me more..."
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
+              style={{
+                width: "100%",
+                background: "rgba(255,255,255,0.8)",
+                border: "0.5px solid rgba(180,155,120,0.2)",
+                borderRadius: 14,
+                padding: "13px 16px",
+                fontSize: 14,
+                fontWeight: 300,
+                color: "#1E1810",
+                outline: "none",
+                fontFamily: "var(--font-dm-sans)",
+                boxSizing: "border-box",
+                resize: "none",
+                height: 80,
+              }}
+            />
+            <textarea
+              placeholder="why is it hard to close? (optional)"
+              value={form.why}
+              onChange={(e) => setForm({ ...form, why: e.target.value })}
+              style={{
+                width: "100%",
+                background: "rgba(255,255,255,0.8)",
+                border: "0.5px solid rgba(180,155,120,0.2)",
+                borderRadius: 14,
+                padding: "13px 16px",
+                fontSize: 14,
+                fontWeight: 300,
+                color: "#1E1810",
+                outline: "none",
+                fontFamily: "var(--font-dm-sans)",
+                boxSizing: "border-box",
+                resize: "none",
+                height: 72,
+              }}
+            />
             <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
               <button
                 onClick={() => setShowModal(false)}
@@ -440,13 +417,13 @@ export default function Home() {
                   border: "none",
                   background: "none",
                   fontSize: 14,
-                  color: "#B8A898",
+                  color: "#C4B4A0",
                   fontWeight: 300,
                   cursor: "pointer",
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >
-                Cancel
+                cancel
               </button>
               <button
                 onClick={handleAdd}
@@ -458,12 +435,12 @@ export default function Home() {
                   background: "#1E1810",
                   color: "#F7F4F0",
                   fontSize: 14,
-                  fontWeight: 500,
+                  fontWeight: 400,
                   cursor: "pointer",
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >
-                Add loop
+                open loop
               </button>
             </div>
           </div>

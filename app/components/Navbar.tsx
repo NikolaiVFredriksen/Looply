@@ -4,9 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { Circle, CheckCircle, Settings } from "lucide-react";
 
 const tabs = [
-  { label: "Loops", icon: Circle, href: "/" },
-  { label: "Closed", icon: CheckCircle, href: "/closed" },
-  { label: "Settings", icon: Settings, href: "/settings" },
+  { label: "loops", icon: Circle, href: "/" },
+  { label: "closed", icon: CheckCircle, href: "/closed" },
+  { label: "settings", icon: Settings, href: "/settings" },
 ];
 
 export default function Navbar() {
@@ -14,62 +14,70 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <nav
+    <div
       style={{
         position: "fixed",
-        bottom: 0,
+        bottom: 32,
         left: 0,
         right: 0,
         display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        padding: "12px 0 28px",
-        background: "rgba(255,255,255,0.95)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        borderTop: "0.5px solid rgba(180,155,120,0.3)",
+        justifyContent: "center",
         zIndex: 40,
       }}
     >
-      {tabs.map(({ label, icon: Icon, href }) => {
-        const active = pathname === href;
-        return (
-          <button
-            key={href}
-            onClick={() => router.push(href)}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 4,
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: "4px 24px",
-            }}
-          >
-            <Icon
-              size={22}
+      <nav
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 4,
+          background: "rgba(30,24,16,0.88)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderRadius: 100,
+          padding: "8px 8px",
+        }}
+      >
+        {tabs.map(({ label, icon: Icon, href }) => {
+          const active = pathname === href;
+          return (
+            <button
+              key={href}
+              onClick={() => router.push(href)}
               style={{
-                color: active ? "#1E1810" : "#C4B4A0",
-                transition: "color 0.2s",
-                strokeWidth: active ? 2 : 1.5,
-              }}
-            />
-            <span
-              style={{
-                fontSize: 11,
-                fontWeight: active ? 500 : 400,
-                color: active ? "#1E1810" : "#C4B4A0",
-                fontFamily: "var(--font-dm-sans)",
-                transition: "color 0.2s",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 3,
+                background: active ? "rgba(255,255,255,0.12)" : "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "8px 20px",
+                borderRadius: 100,
+                transition: "all 0.2s ease",
               }}
             >
-              {label}
-            </span>
-          </button>
-        );
-      })}
-    </nav>
+              <Icon
+                size={18}
+                style={{
+                  color: active ? "#F7F4F0" : "#8A7A6A",
+                  strokeWidth: active ? 2 : 1.5,
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: active ? 400 : 300,
+                  color: active ? "#F7F4F0" : "#8A7A6A",
+                  fontFamily: "var(--font-dm-sans)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+    </div>
   );
 }
