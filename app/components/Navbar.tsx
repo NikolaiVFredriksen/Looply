@@ -24,7 +24,7 @@ export default function Navbar() {
         justifyContent: "space-around",
         alignItems: "center",
         padding: "12px 0 28px",
-        background: "rgba(247,244,240,0.95)",
+        background: "rgba(255,255,255,0.95)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         borderTop: "0.5px solid rgba(180,155,120,0.3)",
