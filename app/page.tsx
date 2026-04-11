@@ -63,20 +63,15 @@ export default function Home() {
         <h1
           style={{
             fontFamily: "var(--font-dm-sans)",
-            fontSize: 28,
+            fontSize: 32,
             color: "#1E1810",
             fontWeight: 300,
             margin: "0 0 6px",
             letterSpacing: "-0.02em",
           }}
         >
-          your loops
+          Looply
         </h1>
-        <p
-          style={{ color: "#C4B4A0", fontSize: 13, margin: 0, fontWeight: 300 }}
-        >
-          {loops.length === 0 ? "nice." : `${loops.length} open · 0 closed`}
-        </p>
       </div>
 
       {/* Empty state */}
@@ -91,7 +86,13 @@ export default function Home() {
             gap: 16,
           }}
         >
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            className="spin-slow"
+          >
             <path
               d="M32 8 A24 24 0 1 0 56 32"
               stroke="#D4C4B0"
