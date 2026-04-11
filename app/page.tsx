@@ -51,6 +51,7 @@ export default function Home() {
 
   return (
     <main
+      onClick={() => setActiveId(null)}
       style={{
         minHeight: "100vh",
         maxWidth: 480,
@@ -119,12 +120,15 @@ export default function Home() {
 
       {/* Loop list */}
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {loops.map((loop) => {
+        {loops.map((loop, index) => {
           const isActive = activeId === loop.id;
           return (
             <div
               key={loop.id}
-              onClick={() => setActiveId(isActive ? null : loop.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveId(isActive ? null : loop.id);
+              }}
               style={{
                 background: "rgba(255,255,255,0.75)",
                 backdropFilter: "blur(12px)",
@@ -145,7 +149,14 @@ export default function Home() {
               >
                 {/* Large open circle */}
                 <div style={{ flexShrink: 0, marginTop: 2 }}>
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <svg
+                    width="36"
+                    height="36"
+                    viewBox="0 0 36 36"
+                    fill="none"
+                    className="spin-slow"
+                    style={{ animationDuration: `${10 + index * 3}s` }}
+                  >
                     <path
                       d="M18 4 A14 14 0 1 0 32 18"
                       stroke="#C4B4A0"
@@ -200,27 +211,12 @@ export default function Home() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 10,
+                    gap: 8,
                     marginTop: 18,
                     paddingTop: 16,
                     borderTop: "0.5px solid rgba(180,155,120,0.12)",
                   }}
                 >
-                  <button
-                    onClick={() => setActiveId(null)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      fontSize: 13,
-                      color: "#C4B4A0",
-                      fontWeight: 300,
-                      cursor: "pointer",
-                      fontFamily: "var(--font-dm-sans)",
-                      padding: "8px 4px",
-                    }}
-                  >
-                    keep
-                  </button>
                   <button
                     onClick={() => {
                       save(loops.filter((l) => l.id !== loop.id));
@@ -228,7 +224,7 @@ export default function Home() {
                     }}
                     style={{
                       flex: 1,
-                      background: "#1E1810",
+                      background: "#2C2018",
                       color: "#F7F4F0",
                       border: "none",
                       borderRadius: 14,
@@ -237,7 +233,6 @@ export default function Home() {
                       fontWeight: 400,
                       cursor: "pointer",
                       fontFamily: "var(--font-dm-sans)",
-                      letterSpacing: "0.01em",
                     }}
                   >
                     close loop
@@ -248,14 +243,16 @@ export default function Home() {
                       setActiveId(null);
                     }}
                     style={{
-                      background: "none",
+                      flex: 1,
+                      background: "rgba(180,155,120,0.12)",
+                      color: "#A89880",
                       border: "none",
+                      borderRadius: 14,
+                      padding: "12px 0",
                       fontSize: 13,
-                      color: "#C4B4A0",
-                      fontWeight: 300,
+                      fontWeight: 400,
                       cursor: "pointer",
                       fontFamily: "var(--font-dm-sans)",
-                      padding: "8px 4px",
                     }}
                   >
                     release
