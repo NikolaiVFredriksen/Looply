@@ -268,24 +268,37 @@ export default function Home() {
       </div>
 
       {/* Add button */}
-      <button
-        onClick={() => setShowModal(true)}
-        style={{
-          marginTop: 12,
-          width: "100%",
-          padding: "16px 0",
-          borderRadius: 24,
-          border: "0.5px dashed rgba(180,155,120,0.3)",
-          background: "transparent",
-          fontSize: 13,
-          color: "#C4B4A0",
-          fontWeight: 300,
-          cursor: "pointer",
-          fontFamily: "var(--font-dm-sans)",
-        }}
-      >
-        + add a loop
-      </button>
+      <div style={{ marginTop: 16, display: "flex", justifyContent: "center" }}>
+        <button
+          onClick={() => setShowModal(true)}
+          style={{
+            padding: "16px 48px",
+            borderRadius: 16,
+            border: "none",
+            background: "#2C2018",
+            fontSize: 14,
+            color: "#F7F4F0",
+            fontWeight: 400,
+            cursor: "pointer",
+            fontFamily: "var(--font-dm-sans)",
+            letterSpacing: "0.03em",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="#F7F4F0" strokeWidth="1.2" />
+            <path
+              d="M8 5v6M5 8h6"
+              stroke="#F7F4F0"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
+          </svg>
+          add a loop
+        </button>
+      </div>
 
       {/* Modal */}
       {showModal && (
