@@ -101,9 +101,10 @@ export default function Home() {
             fontFamily: "var(--font-dm-serif)",
             fontSize: 38,
             color: "#1E1810",
-            fontWeight: 400,
+            fontWeight: 800,
             lineHeight: 1.1,
             margin: 0,
+            letterSpacing: "-0.04em",
           }}
         >
           Looply

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { DM_Sans, Lora } from "next/font/google";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -9,7 +9,7 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500"],
 });
 
-const dmSerif = DM_Serif_Display({
+const dmSerif = Lora({
   variable: "--font-dm-serif",
   subsets: ["latin"],
   weight: "400",
