@@ -307,12 +307,13 @@ export default function Home() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(30,24,16,0.2)",
+            background: "rgba(30,24,16,0.25)",
             backdropFilter: "blur(8px)",
             display: "flex",
-            alignItems: "flex-end",
+            alignItems: "center",
             justifyContent: "center",
             zIndex: 50,
+            padding: "0 24px",
           }}
         >
           <div
@@ -321,23 +322,14 @@ export default function Home() {
               background: "#F7F4F0",
               width: "100%",
               maxWidth: 480,
-              borderRadius: "28px 28px 0 0",
-              padding: "28px 24px 52px",
+              borderRadius: 28,
+              padding: "32px 24px 32px",
               display: "flex",
               flexDirection: "column",
               gap: 12,
-              boxShadow: "0 -8px 48px rgba(30,24,16,0.12)",
+              boxShadow: "0 24px 64px rgba(30,24,16,0.18)",
             }}
           >
-            <div
-              style={{
-                width: 32,
-                height: 3,
-                borderRadius: 2,
-                background: "rgba(180,155,120,0.3)",
-                margin: "-12px auto 16px",
-              }}
-            />
             <h2
               style={{
                 fontFamily: "var(--font-dm-sans)",
@@ -380,28 +372,6 @@ export default function Home() {
               }}
             />
             <textarea
-              placeholder="tell me more..."
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-              style={{
-                width: "100%",
-                background: "rgba(255,255,255,0.8)",
-                border: "0.5px solid rgba(180,155,120,0.2)",
-                borderRadius: 14,
-                padding: "13px 16px",
-                fontSize: 14,
-                fontWeight: 300,
-                color: "#1E1810",
-                outline: "none",
-                fontFamily: "var(--font-dm-sans)",
-                boxSizing: "border-box",
-                resize: "none",
-                height: 80,
-              }}
-            />
-            <textarea
               placeholder="why is it hard to close? (optional)"
               value={form.why}
               onChange={(e) => setForm({ ...form, why: e.target.value })}
@@ -418,7 +388,7 @@ export default function Home() {
                 fontFamily: "var(--font-dm-sans)",
                 boxSizing: "border-box",
                 resize: "none",
-                height: 72,
+                height: 88,
               }}
             />
             <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
@@ -446,7 +416,7 @@ export default function Home() {
                   padding: "13px 0",
                   borderRadius: 14,
                   border: "none",
-                  background: "#1E1810",
+                  background: "#2C2018",
                   color: "#F7F4F0",
                   fontSize: 14,
                   fontWeight: 400,
