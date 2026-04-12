@@ -63,7 +63,7 @@ export default function Home() {
       <div style={{ marginBottom: 48 }}>
         <h1
           style={{
-            fontFamily: "var(--font-dm-sans)",
+            fontFamily: "var(--font-dm-serif)",
             fontSize: 32,
             color: "#1E1810",
             fontWeight: 300,
@@ -421,7 +421,7 @@ export default function Home() {
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >
-                open loop
+                add loop
               </button>
             </div>
           </div>
