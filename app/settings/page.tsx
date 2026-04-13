@@ -1,6 +1,6 @@
 "use client";
-
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ModalType = "terms" | "privacy" | null;
 
@@ -73,7 +73,8 @@ We may update this Privacy Policy from time to time.
 If you have questions, contact us at hello@looply.app.`;
 
 export default function SettingsPage() {
-  const [modal, setModal] = useState<ModalType>(null);
+  const [modal, setModal] = useState<"terms" | "privacy" | null>(null);
+  const router = useRouter();
 
   const resetAll = () => {
     localStorage.removeItem("loops");
@@ -129,6 +130,7 @@ export default function SettingsPage() {
         }}
       >
         {[
+          { label: "how it works", action: () => router.push("/onboarding") },
           { label: "terms of use", action: () => setModal("terms") },
           { label: "privacy policy", action: () => setModal("privacy") },
         ].map((item, i, arr) => (
