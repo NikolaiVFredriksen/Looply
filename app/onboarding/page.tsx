@@ -70,26 +70,26 @@ const slides = [
   {
     id: 3,
     graphic: (
-      <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 10,
+            gap: 12,
           }}
         >
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
             <circle
-              cx="28"
-              cy="28"
-              r="22"
+              cx="32"
+              cy="32"
+              r="26"
               stroke="#C4B4A0"
               strokeWidth="1.5"
               fill="none"
             />
             <path
-              d="M18 28 L25 35 L38 21"
+              d="M20 32 L29 41 L44 24"
               stroke="#C4B4A0"
               strokeWidth="1.5"
               strokeLinecap="round"
@@ -98,7 +98,7 @@ const slides = [
           </svg>
           <p
             style={{
-              fontSize: 11,
+              fontSize: 12,
               color: "#C4B4A0",
               fontWeight: 300,
               margin: 0,
@@ -118,29 +118,23 @@ const slides = [
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 10,
+            gap: 12,
           }}
         >
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-            <path
-              d="M28 8 A20 20 0 1 0 48 28"
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle
+              cx="32"
+              cy="32"
+              r="26"
               stroke="#C4B4A0"
               strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeDasharray="4 3"
               fill="none"
-            />
-            <path
-              d="M28 4 L28 16 M22 10 L28 4 L34 10"
-              stroke="#C4B4A0"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              strokeDasharray="4 3"
             />
           </svg>
           <p
             style={{
-              fontSize: 11,
+              fontSize: 12,
               color: "#C4B4A0",
               fontWeight: 300,
               margin: 0,
@@ -152,8 +146,8 @@ const slides = [
         </div>
       </div>
     ),
-    eyebrow: "every loop ends one of two ways.",
-    title: null,
+    eyebrow: null,
+    title: "every loop ends\none of two ways.",
     body: "close it when you've done the thing. release it when you consciously choose to let it go.",
     sub: null,
   },
