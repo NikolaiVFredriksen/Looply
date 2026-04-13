@@ -10,8 +10,10 @@ const tabs = [
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname === "/onboarding") return null;
 
   return (
     <div

@@ -16,25 +16,19 @@ export default function Home() {
   const [form, setForm] = useState({ title: "", description: "", why: "" });
 
   useEffect(() => {
+    const onboarded = localStorage.getItem("onboarded");
+    if (!onboarded) {
+      window.location.href = "/onboarding";
+      return;
+    }
     const saved = localStorage.getItem("loops");
     if (saved) setLoops(JSON.parse(saved));
-    else
-      setLoops([
-        {
-          id: "1",
-          title: "reach out to martin",
-          description:
-            "we talked about meeting up but neither of us followed through.",
-          why: "not sure if he wants to hear from me.",
-        },
-        {
-          id: "2",
-          title: "learn to make pasta from scratch",
-          description:
-            "been wanting to do this for a long time but never got around to it.",
-          why: "",
-        },
-      ]);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("newloop") === "true") {
+      setShowModal(true);
+      window.history.replaceState({}, "", "/");
+    }
   }, []);
 
   const save = (updated: Loop[]) => {
@@ -63,7 +57,7 @@ export default function Home() {
       <div style={{ marginBottom: 48 }}>
         <h1
           style={{
-            fontFamily: "var(--font-dm-sans)",
+            fontFamily: "var(--font-dm-serif)",
             fontSize: 32,
             color: "#1E1810",
             fontWeight: 300,
@@ -219,6 +213,17 @@ export default function Home() {
                 >
                   <button
                     onClick={() => {
+                      const closedLoop = {
+                        ...loop,
+                        closedAt: new Date().toISOString(),
+                      };
+                      const existing = JSON.parse(
+                        localStorage.getItem("closedLoops") || "[]",
+                      );
+                      localStorage.setItem(
+                        "closedLoops",
+                        JSON.stringify([closedLoop, ...existing]),
+                      );
                       save(loops.filter((l) => l.id !== loop.id));
                       setActiveId(null);
                     }}
@@ -421,7 +426,7 @@ export default function Home() {
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >
-                open loop
+                add loop
               </button>
             </div>
           </div>
