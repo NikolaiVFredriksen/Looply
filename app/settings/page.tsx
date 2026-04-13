@@ -78,7 +78,8 @@ export default function SettingsPage() {
   const resetAll = () => {
     localStorage.removeItem("loops");
     localStorage.removeItem("closedLoops");
-    window.location.href = "/";
+    localStorage.removeItem("onboarded");
+    window.location.href = "/onboarding";
   };
 
   return (

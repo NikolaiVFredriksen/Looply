@@ -16,6 +16,12 @@ export default function Home() {
   const [form, setForm] = useState({ title: "", description: "", why: "" });
 
   useEffect(() => {
+    const onboarded = localStorage.getItem("onboarded");
+    if (!onboarded) {
+      window.location.href = "/onboarding";
+      return;
+    }
+
     const saved = localStorage.getItem("loops");
     if (saved) setLoops(JSON.parse(saved));
     else
