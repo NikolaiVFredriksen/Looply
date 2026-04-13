@@ -219,6 +219,17 @@ export default function Home() {
                 >
                   <button
                     onClick={() => {
+                      const closedLoop = {
+                        ...loop,
+                        closedAt: new Date().toISOString(),
+                      };
+                      const existing = JSON.parse(
+                        localStorage.getItem("closedLoops") || "[]",
+                      );
+                      localStorage.setItem(
+                        "closedLoops",
+                        JSON.stringify([closedLoop, ...existing]),
+                      );
                       save(loops.filter((l) => l.id !== loop.id));
                       setActiveId(null);
                     }}
