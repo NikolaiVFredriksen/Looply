@@ -170,7 +170,7 @@ export default function OnboardingPage() {
       setCurrent(current + 1);
     } else {
       localStorage.setItem("onboarded", "true");
-      router.push("/");
+      router.push("/?newloop=true");
     }
   };
 

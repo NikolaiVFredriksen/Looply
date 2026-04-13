@@ -21,26 +21,14 @@ export default function Home() {
       window.location.href = "/onboarding";
       return;
     }
-
     const saved = localStorage.getItem("loops");
     if (saved) setLoops(JSON.parse(saved));
-    else
-      setLoops([
-        {
-          id: "1",
-          title: "reach out to martin",
-          description:
-            "we talked about meeting up but neither of us followed through.",
-          why: "not sure if he wants to hear from me.",
-        },
-        {
-          id: "2",
-          title: "learn to make pasta from scratch",
-          description:
-            "been wanting to do this for a long time but never got around to it.",
-          why: "",
-        },
-      ]);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("newloop") === "true") {
+      setShowModal(true);
+      window.history.replaceState({}, "", "/");
+    }
   }, []);
 
   const save = (updated: Loop[]) => {
