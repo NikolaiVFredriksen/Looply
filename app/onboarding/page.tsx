@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
-const slides = [
+type Slide = {
+  id: number;
+  graphic: React.ReactNode;
+  eyebrow: string | null;
+  title: string | null;
+  body: string | null;
+  bodyFormatted?: React.ReactNode;
+  sub: string | null;
+};
+
+const slides: Slide[] = [
   {
     id: 0,
     graphic: null,
@@ -163,14 +174,17 @@ const slides = [
 
 export default function OnboardingPage() {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
   const router = useRouter();
 
   const next = () => {
     if (current < slides.length - 1) {
+      setDirection(1);
       setCurrent(current + 1);
     } else {
       localStorage.setItem("onboarded", "true");
-      router.push("/?newloop=true");
+      localStorage.setItem("showNewLoop", "true");
+      router.push("/");
     }
   };
 
@@ -189,6 +203,7 @@ export default function OnboardingPage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        overflow: "hidden",
       }}
     >
       {/* Content */}
@@ -198,71 +213,83 @@ export default function OnboardingPage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 40,
+          position: "relative",
         }}
       >
-        {slide.graphic && (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            {slide.graphic}
-          </div>
-        )}
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {slide.eyebrow && (
-            <p
-              style={{
-                fontSize: 13,
-                color: "#B8A898",
-                fontWeight: 300,
-                margin: 0,
-              }}
-            >
-              {slide.eyebrow}
-            </p>
-          )}
-          {slide.title && (
-            <h1
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                fontSize: 30,
-                fontWeight: 300,
-                color: "#1E1810",
-                margin: 0,
-                lineHeight: 1.3,
-                letterSpacing: "-0.02em",
-                whiteSpace: "pre-line",
-              }}
-            >
-              {slide.title}
-            </h1>
-          )}
-          {slide.body && (
-            <p
-              style={{
-                fontSize: 15,
-                color: "#8A7A6A",
-                fontWeight: 300,
-                margin: 0,
-                lineHeight: 1.8,
-              }}
-            >
-              {slide.body}
-            </p>
-          )}
-          {slide.sub && (
-            <p
-              style={{
-                fontSize: 17,
-                color: "#B8A898",
-                fontWeight: 300,
-                margin: 0,
-                fontStyle: "italic",
-              }}
-            >
-              {slide.sub}
-            </p>
-          )}
-        </div>
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -24 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            style={{ display: "flex", flexDirection: "column", gap: 40 }}
+          >
+            {slide.graphic && (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {slide.graphic}
+              </div>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {slide.eyebrow && (
+                <p
+                  style={{
+                    fontSize: 13,
+                    color: "#B8A898",
+                    fontWeight: 300,
+                    margin: 0,
+                  }}
+                >
+                  {slide.eyebrow}
+                </p>
+              )}
+              {slide.title && (
+                <h1
+                  style={{
+                    fontFamily: "var(--font-dm-sans)",
+                    fontSize: 30,
+                    fontWeight: 300,
+                    color: "#1E1810",
+                    margin: 0,
+                    lineHeight: 1.3,
+                    letterSpacing: "-0.02em",
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {slide.title}
+                </h1>
+              )}
+              {slide.body && (
+                <p
+                  style={{
+                    fontSize: 15,
+                    color: "#8A7A6A",
+                    fontWeight: 300,
+                    margin: 0,
+                    lineHeight: 1.8,
+                  }}
+                >
+                  {slide.body}
+                </p>
+              )}
+              {slide.bodyFormatted && slide.bodyFormatted}
+              {slide.sub && (
+                <p
+                  style={{
+                    fontSize: 17,
+                    color: "#B8A898",
+                    fontWeight: 300,
+                    margin: 0,
+                    fontStyle: "italic",
+                  }}
+                >
+                  {slide.sub}
+                </p>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Bottom */}
@@ -288,7 +315,6 @@ export default function OnboardingPage() {
             />
           ))}
         </div>
-
         <button
           onClick={next}
           style={{

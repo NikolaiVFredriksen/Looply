@@ -22,3 +22,47 @@ body {
 .spin-slow {
   animation: spin 10s linear infinite !important;
 }
+
+@keyframes drawCircle {
+  from {
+    stroke-dashoffset: 88;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeGreen {
+  0% {
+    stroke: #c4b4a0;
+  }
+  100% {
+    stroke: #4caf7d;
+  }
+}
+
+@keyframes toDashed {
+  0% {
+    stroke-dasharray: 0 0;
+    opacity: 1;
+  }
+  40% {
+    stroke-dasharray: 4 3;
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 4 3;
+    opacity: 0;
+  }
+}
+
+@keyframes drawCircleDashed {
+  from {
+    stroke-dashoffset: 88;
+    stroke-dasharray: 88;
+  }
+  to {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 4 3;
+  }
+}
