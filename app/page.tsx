@@ -31,10 +31,10 @@ export default function Home() {
     }
     const saved = localStorage.getItem("loops");
     if (saved) setLoops(JSON.parse(saved));
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("newloop") === "true") {
+    const showNewLoop = localStorage.getItem("showNewLoop");
+    if (showNewLoop === "true") {
       setShowModal(true);
-      window.history.replaceState({}, "", "/");
+      localStorage.removeItem("showNewLoop");
     }
   }, []);
 
