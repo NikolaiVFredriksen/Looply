@@ -55,3 +55,14 @@ body {
     opacity: 0;
   }
 }
+
+@keyframes drawCircleDashed {
+  from {
+    stroke-dashoffset: 88;
+    stroke-dasharray: 88;
+  }
+  to {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 4 3;
+  }
+}

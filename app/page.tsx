@@ -182,7 +182,7 @@ export default function Home() {
                           cx="18"
                           cy="18"
                           r="14"
-                          stroke="#6B8F6B"
+                          stroke="#C4B4A0"
                           strokeWidth="1.5"
                           fill="none"
                           strokeDasharray="88"
@@ -193,7 +193,7 @@ export default function Home() {
                         />
                         <motion.path
                           d="M12 18 L16 22 L24 14"
-                          stroke="#6B8F6B"
+                          stroke="#C4B4A0"
                           strokeWidth="1.5"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -219,7 +219,12 @@ export default function Home() {
                           stroke="#C4B4A0"
                           strokeWidth="1.5"
                           fill="none"
-                          strokeDasharray="4 3"
+                          strokeDasharray="88"
+                          strokeDashoffset="0"
+                          style={{
+                            animation:
+                              "drawCircleDashed 0.8s ease-out forwards",
+                          }}
                         />
                       </motion.svg>
                     ) : (
