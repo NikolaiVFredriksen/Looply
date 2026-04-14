@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type ClosedLoop = {
   id: string;
@@ -75,150 +76,157 @@ export default function ClosedPage() {
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {closed.map((loop) => (
-          <div
-            key={loop.id}
-            style={{
-              background: "rgba(255,255,255,0.75)",
-              borderRadius: 24,
-              padding: "18px 22px",
-              boxShadow: "0 2px 12px rgba(30,24,16,0.07)",
-              border: "0.5px solid rgba(180,155,120,0.2)",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
-              <svg
-                width="36"
-                height="36"
-                viewBox="0 0 36 36"
-                fill="none"
-                style={{ flexShrink: 0, marginTop: 2 }}
-              >
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="14"
-                  stroke="#D4C4B0"
-                  strokeWidth="1.5"
-                  fill="none"
-                />
-              </svg>
-              <div style={{ flex: 1 }}>
-                <p
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 400,
-                    color: "#A89880",
-                    margin: "0 0 4px",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {loop.title}
-                </p>
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "#7A6A5A",
-                    fontWeight: 300,
-                    margin: 0,
-                  }}
-                >
-                  {new Date(loop.closedAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
+      <motion.div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <AnimatePresence>
+          {closed.map((loop) => (
+            <motion.div
+              key={loop.id}
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: "rgba(255,255,255,0.75)",
+                borderRadius: 24,
+                padding: "18px 22px",
+                boxShadow: "0 2px 12px rgba(30,24,16,0.07)",
+                border: "0.5px solid rgba(180,155,120,0.2)",
+              }}
+            >
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 8,
-                  flexShrink: 0,
-                }}
+                style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
               >
-                <button
-                  onClick={() => {
-                    const toRestore = closed.find((l) => l.id === loop.id);
-                    if (!toRestore) return;
-                    const { closedAt, ...restored } = toRestore;
-                    const openLoops = JSON.parse(
-                      localStorage.getItem("loops") || "[]",
-                    );
-                    localStorage.setItem(
-                      "loops",
-                      JSON.stringify([...openLoops, restored]),
-                    );
-                    const updated = closed.filter((l) => l.id !== loop.id);
-                    setClosed(updated);
-                    localStorage.setItem(
-                      "closedLoops",
-                      JSON.stringify(updated),
-                    );
-                  }}
+                <svg
+                  width="36"
+                  height="36"
+                  viewBox="0 0 36 36"
+                  fill="none"
+                  style={{ flexShrink: 0, marginTop: 2 }}
+                >
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r="14"
+                    stroke="#D4C4B0"
+                    strokeWidth="1.5"
+                    fill="none"
+                  />
+                </svg>
+                <div style={{ flex: 1 }}>
+                  <p
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 400,
+                      color: "#A89880",
+                      margin: "0 0 4px",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {loop.title}
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "#7A6A5A",
+                      fontWeight: 300,
+                      margin: 0,
+                    }}
+                  >
+                    {new Date(loop.closedAt).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                </div>
+                <div
                   style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "4px",
-                    color: "#D4C4B0",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 8,
+                    flexShrink: 0,
                   }}
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                  <button
+                    onClick={() => {
+                      const toRestore = closed.find((l) => l.id === loop.id);
+                      if (!toRestore) return;
+                      const { closedAt, ...restored } = toRestore;
+                      const openLoops = JSON.parse(
+                        localStorage.getItem("loops") || "[]",
+                      );
+                      localStorage.setItem(
+                        "loops",
+                        JSON.stringify([...openLoops, restored]),
+                      );
+                      const updated = closed.filter((l) => l.id !== loop.id);
+                      setClosed(updated);
+                      localStorage.setItem(
+                        "closedLoops",
+                        JSON.stringify(updated),
+                      );
+                    }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px",
+                      color: "#D4C4B0",
+                    }}
                   >
-                    <path d="M3 10h13a5 5 0 0 1 0 10H6" />
-                    <polyline points="7 6 3 10 7 14" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => {
-                    const updated = closed.filter((l) => l.id !== loop.id);
-                    setClosed(updated);
-                    localStorage.setItem(
-                      "closedLoops",
-                      JSON.stringify(updated),
-                    );
-                  }}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "4px",
-                    color: "#D4C4B0",
-                  }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M3 10h13a5 5 0 0 1 0 10H6" />
+                      <polyline points="7 6 3 10 7 14" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => {
+                      const updated = closed.filter((l) => l.id !== loop.id);
+                      setClosed(updated);
+                      localStorage.setItem(
+                        "closedLoops",
+                        JSON.stringify(updated),
+                      );
+                    }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px",
+                      color: "#D4C4B0",
+                    }}
                   >
-                    <polyline points="3 6 5 6 21 6" />
-                    <path d="M19 6l-1 14H6L5 6" />
-                    <path d="M10 11v6M14 11v6" />
-                    <path d="M9 6V4h6v2" />
-                  </svg>
-                </button>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6l-1 14H6L5 6" />
+                      <path d="M10 11v6M14 11v6" />
+                      <path d="M9 6V4h6v2" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </main>
   );
 }
