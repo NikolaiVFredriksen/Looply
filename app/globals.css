@@ -41,28 +41,11 @@ body {
   }
 }
 
-@keyframes toDashed {
-  0% {
-    stroke-dasharray: 0 0;
-    opacity: 1;
-  }
-  40% {
-    stroke-dasharray: 4 3;
-    opacity: 1;
-  }
-  100% {
-    stroke-dasharray: 4 3;
-    opacity: 0;
-  }
-}
-
-@keyframes drawCircleDashed {
+@keyframes drawCircleFromOpen {
   from {
-    stroke-dashoffset: 88;
-    stroke-dasharray: 88;
+    stroke-dashoffset: 22;
   }
   to {
     stroke-dashoffset: 0;
-    stroke-dasharray: 4 3;
   }
 }

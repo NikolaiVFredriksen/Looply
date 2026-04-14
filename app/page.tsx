@@ -137,7 +137,7 @@ export default function Home() {
                 }
                 transition={
                   releasingId === loop.id
-                    ? { duration: 1.0, ease: "easeOut", delay: 0.8 }
+                    ? { duration: 0.8, ease: "easeOut", delay: 1.3 }
                     : { duration: 0.4, ease: "easeInOut" }
                 }
                 onClick={(e) => {
@@ -210,7 +210,11 @@ export default function Home() {
                         fill="none"
                         initial={{ opacity: 1, y: 0, scale: 1 }}
                         animate={{ opacity: 0, y: -1, scale: 1.1 }}
-                        transition={{ duration: 2.0, ease: "easeOut" }}
+                        transition={{
+                          duration: 2.0,
+                          ease: "easeOut",
+                          delay: 0.8,
+                        }}
                       >
                         <circle
                           cx="18"
@@ -222,8 +226,7 @@ export default function Home() {
                           strokeDasharray="88"
                           strokeDashoffset="0"
                           style={{
-                            animation:
-                              "drawCircleDashed 0.8s ease-out forwards",
+                            animation: "drawCircle 0.8s ease-out forwards",
                           }}
                         />
                       </motion.svg>
@@ -357,7 +360,7 @@ export default function Home() {
                           setActiveId(null);
                           setReleasingId(null);
                           setReleasingCircleId(null);
-                        }, 2600);
+                        }, 3400);
                       }}
                       style={{
                         flex: 1,
