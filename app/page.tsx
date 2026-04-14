@@ -55,9 +55,12 @@ export default function Home() {
       onClick={() => setActiveId(null)}
       style={{
         minHeight: "100vh",
+        width: "100%",
+        minWidth: 280,
         maxWidth: 480,
         margin: "0 auto",
         padding: "72px 24px 140px",
+        boxSizing: "border-box",
       }}
     >
       {/* Header */}
@@ -120,7 +123,15 @@ export default function Home() {
       )}
 
       {/* Loop list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
         <AnimatePresence>
           {loops.map((loop, index) => {
             const isActive = activeId === loop.id;
@@ -145,6 +156,10 @@ export default function Home() {
                   setActiveId(isActive ? null : loop.id);
                 }}
                 style={{
+                  width: "100%",
+                  minWidth: 250,
+                  maxWidth: 350,
+                  boxSizing: "border-box",
                   background: "rgba(255,255,255,0.75)",
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
@@ -157,7 +172,6 @@ export default function Home() {
                   border: "0.5px solid rgba(180,155,120,0.2)",
                 }}
               >
-                {/* Card content */}
                 <div
                   style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
                 >
@@ -256,7 +270,7 @@ export default function Home() {
                   </div>
 
                   {/* Text */}
-                  <div style={{ flex: 1 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <p
                       style={{
                         fontSize: 15,
@@ -360,7 +374,7 @@ export default function Home() {
                           setActiveId(null);
                           setReleasingId(null);
                           setReleasingCircleId(null);
-                        }, 1800);
+                        }, 2600);
                       }}
                       style={{
                         flex: 1,
