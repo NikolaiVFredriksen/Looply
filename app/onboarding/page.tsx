@@ -4,7 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-const slides = [
+type Slide = {
+  id: number;
+  graphic: React.ReactNode;
+  eyebrow: string | null;
+  title: string | null;
+  body: string | null;
+  bodyFormatted?: React.ReactNode;
+  sub: string | null;
+};
+
+const slides: Slide[] = [
   {
     id: 0,
     graphic: null,
