@@ -137,7 +137,7 @@ export default function Home() {
                 }
                 transition={
                   releasingId === loop.id
-                    ? { duration: 0.8, ease: "easeOut", delay: 1.3 }
+                    ? { duration: 1.0, ease: "easeOut", delay: 0.8 }
                     : { duration: 0.4, ease: "easeInOut" }
                 }
                 onClick={(e) => {
@@ -188,7 +188,7 @@ export default function Home() {
                           strokeDasharray="88"
                           strokeDashoffset="0"
                           style={{
-                            animation: "drawCircle 0.8s ease-out forwards",
+                            animation: "drawCircle 0.5s ease-out forwards",
                           }}
                         />
                         <motion.path
@@ -199,7 +199,7 @@ export default function Home() {
                           strokeLinejoin="round"
                           initial={{ pathLength: 0, opacity: 0 }}
                           animate={{ pathLength: 1, opacity: 1 }}
-                          transition={{ duration: 0.8, delay: 0.3 }}
+                          transition={{ duration: 0.5, delay: 0.2 }}
                         />
                       </svg>
                     ) : releasingCircleId === loop.id ? (
@@ -211,9 +211,9 @@ export default function Home() {
                         initial={{ opacity: 1, y: 0, scale: 1 }}
                         animate={{ opacity: 0, y: -1, scale: 1.1 }}
                         transition={{
-                          duration: 2.0,
+                          duration: 1.2,
                           ease: "easeOut",
-                          delay: 0.8,
+                          delay: 0.5,
                         }}
                       >
                         <circle
@@ -316,7 +316,7 @@ export default function Home() {
                       onClick={() => {
                         setClosingId(loop.id);
                         setTimeout(() => setClosedCircleId(loop.id), 100);
-                        setTimeout(() => setExitingId(loop.id), 2000);
+                        setTimeout(() => setExitingId(loop.id), 1200);
                         setTimeout(() => {
                           const closedLoop = {
                             ...loop,
@@ -334,7 +334,7 @@ export default function Home() {
                           setClosingId(null);
                           setClosedCircleId(null);
                           setExitingId(null);
-                        }, 2600);
+                        }, 1600);
                       }}
                       style={{
                         flex: 1,
@@ -360,7 +360,7 @@ export default function Home() {
                           setActiveId(null);
                           setReleasingId(null);
                           setReleasingCircleId(null);
-                        }, 3400);
+                        }, 1800);
                       }}
                       style={{
                         flex: 1,
