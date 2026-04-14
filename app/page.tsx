@@ -181,18 +181,18 @@ export default function Home() {
                           cx="18"
                           cy="18"
                           r="14"
-                          stroke="#4CAF7D"
+                          stroke="#6B8F6B"
                           strokeWidth="1.5"
                           fill="none"
                           strokeDasharray="88"
                           strokeDashoffset="0"
                           style={{
-                            animation: "drawCircle 0.5s ease-out forwards",
+                            animation: "drawCircle 0.8s ease-out forwards",
                           }}
                         />
                         <motion.path
                           d="M12 18 L16 22 L24 14"
-                          stroke="#4CAF7D"
+                          stroke="#6B8F6B"
                           strokeWidth="1.5"
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -282,13 +282,12 @@ export default function Home() {
                   >
                     <button
                       onClick={() => {
-                        setClosingId(loop.id); // spinner raskere
                         setTimeout(() => {
-                          setClosedCircleId(loop.id); // sirkel blir grønn med checkmark
-                        }, 400);
+                          setClosedCircleId(loop.id);
+                        }, 100);
                         setTimeout(() => {
-                          setExitingId(loop.id); // NÅ begynner kortet å fade
-                        }, 1800);
+                          setExitingId(loop.id);
+                        }, 2000);
                         setTimeout(() => {
                           const closedLoop = {
                             ...loop,
@@ -306,7 +305,7 @@ export default function Home() {
                           setClosingId(null);
                           setClosedCircleId(null);
                           setExitingId(null);
-                        }, 2400);
+                        }, 2600);
                       }}
                       style={{
                         flex: 1,
