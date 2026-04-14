@@ -19,6 +19,9 @@ export default function Home() {
   const [closedCircleId, setClosedCircleId] = useState<string | null>(null);
   const [exitingId, setExitingId] = useState<string | null>(null);
   const [releasingId, setReleasingId] = useState<string | null>(null);
+  const [releasingCircleId, setReleasingCircleId] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const onboarded = localStorage.getItem("onboarded");
@@ -28,7 +31,6 @@ export default function Home() {
     }
     const saved = localStorage.getItem("loops");
     if (saved) setLoops(JSON.parse(saved));
-
     const params = new URLSearchParams(window.location.search);
     if (params.get("newloop") === "true") {
       setShowModal(true);
@@ -122,7 +124,6 @@ export default function Home() {
         <AnimatePresence>
           {loops.map((loop, index) => {
             const isActive = activeId === loop.id;
-            const isClosing = closingId === loop.id;
             return (
               <motion.div
                 key={loop.id}
@@ -131,12 +132,12 @@ export default function Home() {
                   exitingId === loop.id
                     ? { opacity: 0, scale: 0.95 }
                     : releasingId === loop.id
-                      ? { opacity: 0, y: -24, scale: 1.02 }
+                      ? { opacity: 0, y: -20 }
                       : { opacity: 1, scale: 1, y: 0 }
                 }
                 transition={
                   releasingId === loop.id
-                    ? { duration: 0.5, ease: "easeOut" }
+                    ? { duration: 1.0, ease: "easeOut", delay: 0.8 }
                     : { duration: 0.4, ease: "easeInOut" }
                 }
                 onClick={(e) => {
@@ -154,20 +155,20 @@ export default function Home() {
                     ? "0 12px 40px rgba(30,24,16,0.12), 0 2px 8px rgba(30,24,16,0.06)"
                     : "0 2px 12px rgba(30,24,16,0.07), 0 1px 3px rgba(30,24,16,0.04)",
                   border: "0.5px solid rgba(180,155,120,0.2)",
-                  transform: isActive ? "translateY(-1px)" : "none",
                 }}
               >
+                {/* Card content */}
                 <div
                   style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
                 >
-                  {/* Large open circle */}
+                  {/* Circle */}
                   <div
                     style={{
                       flexShrink: 0,
                       marginTop: 2,
-                      position: "relative",
                       width: 36,
                       height: 36,
+                      position: "relative",
                     }}
                   >
                     {closedCircleId === loop.id ? (
@@ -198,9 +199,29 @@ export default function Home() {
                           strokeLinejoin="round"
                           initial={{ pathLength: 0, opacity: 0 }}
                           animate={{ pathLength: 1, opacity: 1 }}
-                          transition={{ duration: 0.5, delay: 0.3 }}
+                          transition={{ duration: 0.8, delay: 0.3 }}
                         />
                       </svg>
+                    ) : releasingCircleId === loop.id ? (
+                      <motion.svg
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                        fill="none"
+                        initial={{ opacity: 1, y: 0, scale: 1 }}
+                        animate={{ opacity: 0, y: -1, scale: 1.1 }}
+                        transition={{ duration: 2.0, ease: "easeOut" }}
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="14"
+                          stroke="#C4B4A0"
+                          strokeWidth="1.5"
+                          fill="none"
+                          strokeDasharray="4 3"
+                        />
+                      </motion.svg>
                     ) : (
                       <svg
                         width="36"
@@ -225,6 +246,8 @@ export default function Home() {
                       </svg>
                     )}
                   </div>
+
+                  {/* Text */}
                   <div style={{ flex: 1 }}>
                     <p
                       style={{
@@ -264,6 +287,7 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Actions */}
                 {isActive && (
                   <motion.div
                     initial={{ opacity: 0, y: -8 }}
@@ -282,12 +306,9 @@ export default function Home() {
                   >
                     <button
                       onClick={() => {
-                        setTimeout(() => {
-                          setClosedCircleId(loop.id);
-                        }, 100);
-                        setTimeout(() => {
-                          setExitingId(loop.id);
-                        }, 2000);
+                        setClosingId(loop.id);
+                        setTimeout(() => setClosedCircleId(loop.id), 100);
+                        setTimeout(() => setExitingId(loop.id), 2000);
                         setTimeout(() => {
                           const closedLoop = {
                             ...loop,
@@ -325,11 +346,13 @@ export default function Home() {
                     <button
                       onClick={() => {
                         setReleasingId(loop.id);
+                        setTimeout(() => setReleasingCircleId(loop.id), 100);
                         setTimeout(() => {
                           save(loops.filter((l) => l.id !== loop.id));
                           setActiveId(null);
                           setReleasingId(null);
-                        }, 600);
+                          setReleasingCircleId(null);
+                        }, 2600);
                       }}
                       style={{
                         flex: 1,
@@ -418,7 +441,7 @@ export default function Home() {
                 width: "100%",
                 maxWidth: 480,
                 borderRadius: 28,
-                padding: "32px 24px 32px",
+                padding: "32px 24px",
                 display: "flex",
                 flexDirection: "column",
                 gap: 12,

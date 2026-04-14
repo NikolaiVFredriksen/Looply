@@ -40,3 +40,18 @@ body {
     stroke: #4caf7d;
   }
 }
+
+@keyframes toDashed {
+  0% {
+    stroke-dasharray: 0 0;
+    opacity: 1;
+  }
+  40% {
+    stroke-dasharray: 4 3;
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 4 3;
+    opacity: 0;
+  }
+}
