@@ -419,7 +419,7 @@ export default function Home() {
             gap: 8,
           }}
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          {/* <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <circle cx="8" cy="8" r="6.5" stroke="#F7F4F0" strokeWidth="1.2" />
             <path
               d="M8 5v6M5 8h6"
@@ -427,7 +427,7 @@ export default function Home() {
               strokeWidth="1.2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg> */}
           add a loop
         </button>
       </div>
