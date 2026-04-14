@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Loop = {
   id: string;
@@ -14,6 +15,9 @@ export default function Home() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", why: "" });
+  const [closingId, setClosingId] = useState<string | null>(null);
+  const [closedCircleId, setClosedCircleId] = useState<string | null>(null);
+  const [exitingId, setExitingId] = useState<string | null>(null);
 
   useEffect(() => {
     const onboarded = localStorage.getItem("onboarded");
@@ -114,159 +118,226 @@ export default function Home() {
 
       {/* Loop list */}
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {loops.map((loop, index) => {
-          const isActive = activeId === loop.id;
-          return (
-            <div
-              key={loop.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveId(isActive ? null : loop.id);
-              }}
-              style={{
-                background: "rgba(255,255,255,0.75)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                borderRadius: 24,
-                padding: "20px 22px",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-                boxShadow: isActive
-                  ? "0 12px 40px rgba(30,24,16,0.12), 0 2px 8px rgba(30,24,16,0.06)"
-                  : "0 2px 12px rgba(30,24,16,0.07), 0 1px 3px rgba(30,24,16,0.04)",
-                border: "0.5px solid rgba(180,155,120,0.2)",
-                transform: isActive ? "translateY(-1px)" : "none",
-              }}
-            >
-              <div
-                style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
+        <AnimatePresence>
+          {loops.map((loop, index) => {
+            const isActive = activeId === loop.id;
+            const isClosing = closingId === loop.id;
+            return (
+              <motion.div
+                key={loop.id}
+                initial={{ opacity: 1, scale: 1 }}
+                animate={
+                  exitingId === loop.id
+                    ? { opacity: 0, scale: 0.95 }
+                    : { opacity: 1, scale: 1 }
+                }
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveId(isActive ? null : loop.id);
+                }}
+                style={{
+                  background: "rgba(255,255,255,0.75)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  borderRadius: 24,
+                  padding: "20px 22px",
+                  cursor: "pointer",
+                  boxShadow: isActive
+                    ? "0 12px 40px rgba(30,24,16,0.12), 0 2px 8px rgba(30,24,16,0.06)"
+                    : "0 2px 12px rgba(30,24,16,0.07), 0 1px 3px rgba(30,24,16,0.04)",
+                  border: "0.5px solid rgba(180,155,120,0.2)",
+                  transform: isActive ? "translateY(-1px)" : "none",
+                }}
               >
-                {/* Large open circle */}
-                <div style={{ flexShrink: 0, marginTop: 2 }}>
-                  <svg
-                    width="36"
-                    height="36"
-                    viewBox="0 0 36 36"
-                    fill="none"
-                    className="spin-slow"
-                    style={{ animationDuration: `${10 + index * 3}s` }}
-                  >
-                    <path
-                      d="M18 4 A14 14 0 1 0 32 18"
-                      stroke="#C4B4A0"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                  </svg>
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p
+                <div
+                  style={{ display: "flex", alignItems: "flex-start", gap: 18 }}
+                >
+                  {/* Large open circle */}
+                  <div
                     style={{
-                      fontSize: 15,
-                      fontWeight: 400,
-                      color: "#1E1810",
-                      margin: "0 0 5px",
-                      lineHeight: 1.4,
+                      flexShrink: 0,
+                      marginTop: 2,
+                      position: "relative",
+                      width: 36,
+                      height: 36,
                     }}
                   >
-                    {loop.title}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: "#A89880",
-                      fontWeight: 300,
-                      margin: 0,
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    {loop.description}
-                  </p>
-                  {loop.why && (
+                    {closedCircleId === loop.id ? (
+                      <svg
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                        fill="none"
+                      >
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="14"
+                          stroke="#4CAF7D"
+                          strokeWidth="1.5"
+                          fill="none"
+                          strokeDasharray="88"
+                          strokeDashoffset="0"
+                          style={{
+                            animation: "drawCircle 0.5s ease-out forwards",
+                          }}
+                        />
+                        <motion.path
+                          d="M12 18 L16 22 L24 14"
+                          stroke="#4CAF7D"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          initial={{ pathLength: 0, opacity: 0 }}
+                          animate={{ pathLength: 1, opacity: 1 }}
+                          transition={{ duration: 0.5, delay: 0.3 }}
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                        fill="none"
+                        className="spin-slow"
+                        style={{
+                          animationDuration:
+                            closingId === loop.id
+                              ? "0.8s"
+                              : `${10 + index * 3}s`,
+                        }}
+                      >
+                        <path
+                          d="M18 4 A14 14 0 1 0 32 18"
+                          stroke="#C4B4A0"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          fill="none"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  <div style={{ flex: 1 }}>
                     <p
                       style={{
-                        fontSize: 12,
-                        color: "#C4B4A0",
-                        fontStyle: "italic",
-                        margin: "5px 0 0",
-                        fontWeight: 300,
+                        fontSize: 15,
+                        fontWeight: 400,
+                        color: "#1E1810",
+                        margin: "0 0 5px",
+                        lineHeight: 1.4,
                       }}
                     >
-                      {loop.why}
+                      {loop.title}
                     </p>
-                  )}
+                    <p
+                      style={{
+                        fontSize: 13,
+                        color: "#A89880",
+                        fontWeight: 300,
+                        margin: 0,
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {loop.description}
+                    </p>
+                    {loop.why && (
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: "#C4B4A0",
+                          fontStyle: "italic",
+                          margin: "5px 0 0",
+                          fontWeight: 300,
+                        }}
+                      >
+                        {loop.why}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {isActive && (
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginTop: 18,
-                    paddingTop: 16,
-                    borderTop: "0.5px solid rgba(180,155,120,0.12)",
-                  }}
-                >
-                  <button
-                    onClick={() => {
-                      const closedLoop = {
-                        ...loop,
-                        closedAt: new Date().toISOString(),
-                      };
-                      const existing = JSON.parse(
-                        localStorage.getItem("closedLoops") || "[]",
-                      );
-                      localStorage.setItem(
-                        "closedLoops",
-                        JSON.stringify([closedLoop, ...existing]),
-                      );
-                      save(loops.filter((l) => l.id !== loop.id));
-                      setActiveId(null);
-                    }}
+                {isActive && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
                     style={{
-                      flex: 1,
-                      background: "#2C2018",
-                      color: "#F7F4F0",
-                      border: "none",
-                      borderRadius: 14,
-                      padding: "12px 0",
-                      fontSize: 13,
-                      fontWeight: 400,
-                      cursor: "pointer",
-                      fontFamily: "var(--font-dm-sans)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      marginTop: 18,
+                      paddingTop: 16,
+                      borderTop: "0.5px solid rgba(180,155,120,0.12)",
                     }}
                   >
-                    close loop
-                  </button>
-                  <button
-                    onClick={() => {
-                      save(loops.filter((l) => l.id !== loop.id));
-                      setActiveId(null);
-                    }}
-                    style={{
-                      flex: 1,
-                      background: "rgba(180,155,120,0.12)",
-                      color: "#A89880",
-                      border: "none",
-                      borderRadius: 14,
-                      padding: "12px 0",
-                      fontSize: 13,
-                      fontWeight: 400,
-                      cursor: "pointer",
-                      fontFamily: "var(--font-dm-sans)",
-                    }}
-                  >
-                    release
-                  </button>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                    <button
+                      onClick={() => {
+                        setClosingId(loop.id); // spinner raskere
+                        setTimeout(() => {
+                          setClosedCircleId(loop.id); // sirkel blir grønn med checkmark
+                        }, 400);
+                        setTimeout(() => {
+                          setExitingId(loop.id); // NÅ begynner kortet å fade
+                        }, 1800);
+                        setTimeout(() => {
+                          const closedLoop = {
+                            ...loop,
+                            closedAt: new Date().toISOString(),
+                          };
+                          const existing = JSON.parse(
+                            localStorage.getItem("closedLoops") || "[]",
+                          );
+                          localStorage.setItem(
+                            "closedLoops",
+                            JSON.stringify([closedLoop, ...existing]),
+                          );
+                          save(loops.filter((l) => l.id !== loop.id));
+                          setActiveId(null);
+                          setClosingId(null);
+                          setClosedCircleId(null);
+                          setExitingId(null);
+                        }, 2400);
+                      }}
+                      style={{
+                        flex: 1,
+                        background: "#2C2018",
+                        color: "#F7F4F0",
+                        border: "none",
+                        borderRadius: 14,
+                        padding: "12px 0",
+                        fontSize: 13,
+                        fontWeight: 400,
+                        cursor: "pointer",
+                        fontFamily: "var(--font-dm-sans)",
+                      }}
+                    >
+                      close loop
+                    </button>
+                    <button
+                      onClick={() => {
+                        save(loops.filter((l) => l.id !== loop.id));
+                        setActiveId(null);
+                      }}
+                      style={{
+                        flex: 1,
+                        background: "rgba(180,155,120,0.12)",
+                        color: "#A89880",
+                        border: "none",
+                        borderRadius: 14,
+                        padding: "12px 0",
+                        fontSize: 13,
+                        fontWeight: 400,
+                        cursor: "pointer",
+                        fontFamily: "var(--font-dm-sans)",
+                      }}
+                    >
+                      release
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </div>
 
       {/* Add button */}
