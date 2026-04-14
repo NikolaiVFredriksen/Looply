@@ -126,7 +126,7 @@ export default function Home() {
             return (
               <motion.div
                 key={loop.id}
-                initial={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={
                   exitingId === loop.id
                     ? { opacity: 0, scale: 0.95 }
