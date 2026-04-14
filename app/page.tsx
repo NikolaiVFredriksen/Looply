@@ -265,7 +265,11 @@ export default function Home() {
                 </div>
 
                 {isActive && (
-                  <div
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                     onClick={(e) => e.stopPropagation()}
                     style={{
                       display: "flex",
@@ -343,7 +347,7 @@ export default function Home() {
                     >
                       release
                     </button>
-                  </div>
+                  </motion.div>
                 )}
               </motion.div>
             );
