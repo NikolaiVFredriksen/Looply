@@ -18,6 +18,7 @@ export default function Home() {
   const [closingId, setClosingId] = useState<string | null>(null);
   const [closedCircleId, setClosedCircleId] = useState<string | null>(null);
   const [exitingId, setExitingId] = useState<string | null>(null);
+  const [releasingId, setReleasingId] = useState<string | null>(null);
 
   useEffect(() => {
     const onboarded = localStorage.getItem("onboarded");
@@ -129,9 +130,15 @@ export default function Home() {
                 animate={
                   exitingId === loop.id
                     ? { opacity: 0, scale: 0.95 }
-                    : { opacity: 1, scale: 1 }
+                    : releasingId === loop.id
+                      ? { opacity: 0, y: -24, scale: 1.02 }
+                      : { opacity: 1, scale: 1, y: 0 }
                 }
-                transition={{ duration: 0.4, ease: "easeInOut" }}
+                transition={
+                  releasingId === loop.id
+                    ? { duration: 0.5, ease: "easeOut" }
+                    : { duration: 0.4, ease: "easeInOut" }
+                }
                 onClick={(e) => {
                   e.stopPropagation();
                   setActiveId(isActive ? null : loop.id);
@@ -314,8 +321,12 @@ export default function Home() {
                     </button>
                     <button
                       onClick={() => {
-                        save(loops.filter((l) => l.id !== loop.id));
-                        setActiveId(null);
+                        setReleasingId(loop.id);
+                        setTimeout(() => {
+                          save(loops.filter((l) => l.id !== loop.id));
+                          setActiveId(null);
+                          setReleasingId(null);
+                        }, 600);
                       }}
                       style={{
                         flex: 1,
