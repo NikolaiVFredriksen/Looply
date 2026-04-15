@@ -1,18 +1,23 @@
 # Looply
 
-![Looply Onboarding](screenshots/onboarding.png)
-
 A mindful app for closing the open loops that live rent-free in your head. Not your grocery list — the harder stuff. The conversation you're avoiding. The decision you keep postponing. The thing you've been meaning to do for months.
 
 **[Live Demo](https://looply-sigma.vercel.app)**
 
-![Looply App](screenshots/app.png)
+<p float="left">
+  <img src="screenshots/onboarding.png" width="250" alt="Looply Onboarding" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="screenshots/onboarding-2.png" width="250" alt="Looply Onboarding" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="screenshots/app.png" width="250" alt="Looply App" />
+</p>
 
 ---
 
 ## Features
 
 - **Open loops** — Add the things weighing on your mind with a title and an optional reason for why it's hard to close
+- **Edit loops** — Tap a loop to update the title or reason at any time
 - **Close or release** — Close a loop when you've done the thing, or consciously release it and let it go
 - **Satisfying animations** — Each action has a distinct, intentional animation that makes closing loops feel meaningful
 - **Closed loops history** — Review what you've closed, with the option to restore or delete
