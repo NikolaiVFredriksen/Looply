@@ -81,7 +81,10 @@ export default function Home() {
 
       {/* Empty state */}
       {loops.length === 0 && (
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -119,7 +122,7 @@ export default function Home() {
           <p style={{ color: "#D4C4B0", fontSize: 13, fontWeight: 300 }}>
             nice.
           </p>
-        </div>
+        </motion.div>
       )}
 
       {/* Loop list */}

@@ -12,6 +12,7 @@ type ClosedLoop = {
 
 export default function ClosedPage() {
   const [closed, setClosed] = useState<ClosedLoop[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("closedLoops");
@@ -76,20 +77,32 @@ export default function ClosedPage() {
         </div>
       )}
 
-      <motion.div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <AnimatePresence>
           {closed.map((loop) => (
             <motion.div
               key={loop.id}
               initial={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              animate={{
+                scale: activeId === loop.id ? 1.02 : 1,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+              }}
+              onClick={() => setActiveId(activeId === loop.id ? null : loop.id)}
               style={{
+                width: "100%",
+                boxSizing: "border-box",
                 background: "rgba(255,255,255,0.75)",
                 borderRadius: 24,
                 padding: "18px 22px",
-                boxShadow: "0 2px 12px rgba(30,24,16,0.07)",
                 border: "0.5px solid rgba(180,155,120,0.2)",
+                cursor: "pointer",
+                boxShadow:
+                  "0 2px 12px rgba(30,24,16,0.07), 0 1px 3px rgba(30,24,16,0.04)",
               }}
             >
               <div
@@ -226,7 +239,7 @@ export default function ClosedPage() {
             </motion.div>
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </main>
   );
 }
