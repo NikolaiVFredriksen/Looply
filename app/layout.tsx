@@ -18,6 +18,9 @@ const dmSerif = Lora({
 export const metadata: Metadata = {
   title: "Looply",
   description: "Close your open loops.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
