@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   description: "Close your open loops.",
   icons: {
     icon: "/favicon.svg",
+    apple: "/apple-touch-icon.png",
   },
 };
 
