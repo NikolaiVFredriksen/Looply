@@ -5,9 +5,9 @@ A mindful app for closing the open loops that live rent-free in your head. Not y
 **[Live Demo](https://looply-sigma.vercel.app)**
 
 <p float="left">
-  <img src="screenshots/onboarding.png" width="250" alt="Looply Onboarding" />
+  <img src="screenshots/onboarding-one.png" width="250" alt="Looply Onboarding" />
   &nbsp;&nbsp;&nbsp;
-  <img src="screenshots/onboarding-2.png" width="250" alt="Looply Onboarding" />
+  <img src="screenshots/onboarding-two.png" width="250" alt="Looply Onboarding" />
   &nbsp;&nbsp;&nbsp;
   <img src="screenshots/app.png" width="250" alt="Looply App" />
 </p>
@@ -68,16 +68,26 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 app/
 ├── components/
-│   └── Navbar.tsx          # Bottom pill navigation
+│   ├── Navbar.tsx              # Bottom pill navigation
+│   ├── LoopCard.tsx            # Individual loop card with circle animations
+│   ├── LoopList.tsx            # Animated list of loop cards
+│   ├── ClosedLoopCard.tsx      # Card for closed loops history
+│   ├── AddLoopModal.tsx        # Modal for adding a new loop
+│   ├── EditLoopModal.tsx       # Modal for editing an existing loop
+│   └── EmptyState.tsx          # Empty state when no loops exist
+├── data/
+│   └── legal.ts                # Terms of use and privacy policy content
+├── types/
+│   └── index.ts                # Shared Loop and ClosedLoop types
 ├── closed/
-│   └── page.tsx            # Closed loops history
+│   └── page.tsx                # Closed loops history page
 ├── onboarding/
-│   └── page.tsx            # Onboarding slides
+│   └── page.tsx                # Onboarding slides
 ├── settings/
-│   └── page.tsx            # Settings, terms and privacy
-├── layout.tsx              # Root layout with fonts
-├── page.tsx                # Main loops page
-└── globals.css             # Global styles and animations
+│   └── page.tsx                # Settings, terms and privacy policy
+├── layout.tsx                  # Root layout with fonts
+├── page.tsx                    # Main loops page
+└── globals.css                 # Global styles and keyframe animations
 ```
 
 ---
